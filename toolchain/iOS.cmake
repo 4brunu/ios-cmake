@@ -4,7 +4,7 @@
 
 # Options:
 #
-# IOS_PLATFORM = OS (default) or SIMULATOR or SIMULATOR64
+# IOS_PLATFORM = OS (default) or SIMULATOR
 #   This decides if SDKS will be selected from the iPhoneOS.platform or iPhoneSimulator.platform folders
 #   OS - the default, used to build for iPhone and iPad physical devices, which have an arm arch.
 #   SIMULATOR - used to build for the Simulator platforms, which have an x86 arch.
@@ -96,12 +96,6 @@ if (NOT DEFINED IOS_PLATFORM)
 endif (NOT DEFINED IOS_PLATFORM)
 set (IOS_PLATFORM ${IOS_PLATFORM} CACHE STRING "Type of iOS Platform")
 
-# Setup building for arm64 or not
-if (NOT DEFINED BUILD_ARM64)
-    set (BUILD_ARM64 true)
-endif (NOT DEFINED BUILD_ARM64)
-set (BUILD_ARM64 ${BUILD_ARM64} CACHE STRING "Build arm64 arch or not")
-
 # Check the platform selection and setup for developer root
 if (${IOS_PLATFORM} STREQUAL OS)
 	set (IOS_PLATFORM_LOCATION "iPhoneOS.platform")
@@ -109,13 +103,7 @@ if (${IOS_PLATFORM} STREQUAL OS)
 	# This causes the installers to properly locate the output libraries
 	set (CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos")
 elseif (${IOS_PLATFORM} STREQUAL SIMULATOR)
-    set (SIMULATOR true)
-	set (IOS_PLATFORM_LOCATION "iPhoneSimulator.platform")
-
-	# This causes the installers to properly locate the output libraries
-	set (CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphonesimulator")
-elseif (${IOS_PLATFORM} STREQUAL SIMULATOR64)
-    set (SIMULATOR true)
+  set (SIMULATOR true)
 	set (IOS_PLATFORM_LOCATION "iPhoneSimulator.platform")
 
 	# This causes the installers to properly locate the output libraries
@@ -159,9 +147,7 @@ set (CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Sysroot used for iOS su
 if (${IOS_PLATFORM} STREQUAL OS)
     set (IOS_ARCH armv7 armv7s arm64)
 elseif (${IOS_PLATFORM} STREQUAL SIMULATOR)
-    set (IOS_ARCH i386)
-elseif (${IOS_PLATFORM} STREQUAL SIMULATOR64)
-    set (IOS_ARCH x86_64)
+    set (IOS_ARCH i386 x86_64)
 endif (${IOS_PLATFORM} STREQUAL OS)
 
 set (CMAKE_OSX_ARCHITECTURES ${IOS_ARCH} CACHE string  "Build architecture for iOS")
