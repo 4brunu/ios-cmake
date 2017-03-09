@@ -46,11 +46,8 @@ if (CMAKE_UNAME)
 endif (CMAKE_UNAME)
 
 # Force the compilers to gcc for iOS
-set(XCODE_TOOLCHAIN /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain)
-set(XCODE_BIN ${XCODE_TOOLCHAIN}/usr/bin)
-set(CMAKE_C_COMPILER ${XCODE_BIN}/clang)
-set(CMAKE_CXX_COMPILER ${XCODE_BIN}/clang++)
-set(CMAKE_FIND_ROOT_PATH ${XCODE_TOOLCHAIN_ROOT})
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_AR ar CACHE FILEPATH "" FORCE)
 
 # Skip the platform compiler checks for cross compiling
